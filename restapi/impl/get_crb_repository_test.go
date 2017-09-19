@@ -9,7 +9,7 @@ import (
 
 func TestGetRepository(t *testing.T) {
 	var mockDB *utils.Mockdb
-	addr := "192.168.1.1"
+	addr := "1.2.3.4"
 	user := "user"
 
 	tests := []struct {

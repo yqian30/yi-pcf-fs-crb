@@ -13,15 +13,15 @@ func Test_validate(t *testing.T) {
 	type args struct {
 		repoinfo *models.RepositoryInfo
 	}
-	addr := "192.168.1.1"
+	addr := "1.2.3.4"
 	user := "user"
 	ipv6Addr := "::1"
 	dnsAddr := "localhost"
 	ipv6AddrPort := "[::1]:8080"
-	addrPort := "192.168.1.1:8080"
+	addrPort := "1.2.3.4:8080"
 	dnsAddrPort := "localhost:8080"
 	invalidAddrPort := "blah:8080"
-	addrInvalidPort := "192.168.1.1:65536"
+	addrInvalidPort := "1.2.3.4:65536"
 	ipv6AddrInvalidPort := "[::1]:65536"
 	dnsAddrInvalidPort := "localhost:blah"
 	invalidIpv6AddrFormat := "2001:0db8:85a3:0000:0000:8a2e:0370:7334:8080" // missing [] around ip literal before the port 8080
@@ -127,7 +127,7 @@ func Test_validate(t *testing.T) {
 
 func TestPostrepohandler(t *testing.T) {
 	var mockDB *utils.Mockdb
-	addr := "192.168.1.1"
+	addr := "1.2.3.4"
 	user := "user"
 
 	type args struct {

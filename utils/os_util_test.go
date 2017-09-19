@@ -24,7 +24,7 @@ var ENV = `{
          "username": "xvQVjibAbTJoJ5Nd"
          },
       "label": "p-mysql",
-       "name": "cindys_db",
+       "name": "test_db",
        "plan": "1gb",
         "provider": null,
         "syslog_drain_url": null,
@@ -49,7 +49,7 @@ var BadURLENV = `{
          "username": "xvQVjibAbTJoJ5Nd"
          },
       "label": "p-mysql",
-       "name": "cindys_db",
+       "name": "test_db",
        "plan": "1gb",
         "provider": null,
         "syslog_drain_url": null,
@@ -74,7 +74,7 @@ var BadPingENV = `{
          "username": "xvQVjibAbTJoJ5Nd"
          },
       "label": "p-mysql",
-       "name": "cindys_db",
+       "name": "test_db",
        "plan": "1gb",
         "provider": null,
         "syslog_drain_url": null,
