@@ -1,0 +1,72 @@
+language: go
+
+go:
+  - 1.8
+
+env:
+  global:
+  - MAJOR_VERSION=2
+  - MINOR_VERSION=0
+
+install:
+  - ln -sf `pwd` $GOPATH/src/crb
+  - curl -o swagger -L'#' https://github.com/go-swagger/go-swagger/releases/download/0.8.0/swagger_$(echo `uname`|tr '[:upper:]' '[:lower:]')_amd64
+  - chmod +x swagger
+  - cd $GOPATH/src/crb
+  - ./swagger generate server -f swagger.yaml -A crb
+  - go get github.com/tools/godep
+  - godep version
+  - godep restore
+  - ./swagger generate server -f swagger.yaml -A crb
+  
+script:
+  - ls $GOPATH/src/
+  - go install ./...
+  - ls -la
+  - go test ./...
+  - cd cmd/crb-server/
+  - go build
+  - ls -la
+  - cd $GOPATH/src/crb/
+  #- cd $GOPATH/src/crb/cmd/crb-server
+  #- mvn deploy:deploy-file -Dfile=cmd/crb-server/crb-server -DpomFile=pom.xml -Dtypes=bin -DrepositoryId=bintray-ocopea-pcf-fs-crb --settings settings.xml  
+  #- curl -T crb-server -u akarmia:f85c7ec8c15692e5f996b25f80244a962a5b91d5 https://api.bintray.com/content/ocopea/pcf-fs-crb/pcf-fs-crb/1.1/crb-server-1.1
+  - RES=$(curl https://api.bintray.com/packages/ocopea/pcf-fs-crb/pcf-fs-crb/versions/_latest -u yqian30:4ab324aad6d88d8a5f78416b7f416b7f60d495cf)
+  - echo $RES
+  - if [ "$RES" != '{"message":"Not Found"}' ]; then
+        OLD_VERSION=$(echo $RES | awk -F, {'print $1'} | awk -F '"' {'print $4'} | awk -F '.' {'print $2'} );
+        MINOR_VERSION=$(echo "$OLD_VERSION+1" | bc );
+    fi
+  - echo $OLD_VERSION
+  - echo $MINOR_VERSION
+  - NEW_VERSION=$MAJOR_VERSION.$MINOR_VERSION 
+  - echo $NEW_VERSION
+  - VERSION_IN_FILE=$(grep -A2 '"name"' descriptor.json | grep -o "[0-9]*\.[0-9]*")
+  - MATCH='s/\"name\"\:\s*\"'$VERSION_IN_FILE'\"/\"name\"\:\"'$NEW_VERSION'\"/'
+  - sed -i $MATCH descriptor.json
+  - echo $TRAVIS_BRANCH
+  
+deploy:  
+  skip_cleanup: true
+  provider: bintray
+  user: yqian30
+  key: $BINTRAY_DEPLOY_KEY
+  file: descriptor.json
+  on:
+    all_branches: true
+    
+after_deploy:
+  - echo "Deployment succeeded!!!!!!!!!!!!"
+  - VERSION_IN_FILE=$(grep -A2 '"name"' descriptor.json | grep -o "[0-9]*\.[0-9]*")
+  - echo $VERSION_IN_FILE
+  - NEW_VERSION=$(echo "$VERSION_IN_FILE+0.1" | bc | awk '{printf "%.1f", $0}')
+  - echo $NEW_VERSION
+  - MATCH='s/\"name\"\:\s*\"'$VERSION_IN_FILE'\"/\"name\"\:\"'$NEW_VERSION'\"/'
+  - sed -i $MATCH descriptor.json
+  - cat descriptor.json
+  - echo $TRAVIS_BRANCH
+  - git checkout -B $TRAVIS_BRANCH
+  - git add descriptor.json
+  - git commit -m "[ci skip] Updated descriptor file with new version $NEW_VERSION."
+  - git push origin $TRAVIS_BRANCH
+  
