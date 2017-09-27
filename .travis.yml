@@ -1,0 +1,36 @@
+language: go
+
+go:
+  - 1.8
+
+install:
+  - ln -sf `pwd` $GOPATH/src/crb
+  - curl -o swagger -L'#' https://github.com/go-swagger/go-swagger/releases/download/0.8.0/swagger_$(echo `uname`|tr '[:upper:]' '[:lower:]')_amd64
+  - chmod +x swagger
+  - cd $GOPATH/src/crb
+  - ./swagger generate server -f swagger.yaml -A crb
+  - go get github.com/tools/godep
+  - godep version
+  - godep restore
+  - ./swagger generate server -f swagger.yaml -A crb
+  
+script:
+  - ls $GOPATH/src/
+  - go install ./...
+  - ls -la
+  - go test ./...
+  - cd cmd/crb-server/
+  - go build
+  - ls -la
+  - cd $GOPATH/src/crb/cmd/crb-server
+  #- mvn deploy:deploy-file -Dfile=cmd/crb-server/crb-server -DpomFile=pom.xml -Dtypes=bin -DrepositoryId=bintray-ocopea-pcf-fs-crb --settings settings.xml  
+  #- curl -T crb-server -u akarmia:f85c7ec8c15692e5f996b25f80244a962a5b91d5 https://api.bintray.com/content/ocopea/pcf-fs-crb/pcf-fs-crb/1.1/crb-server-1.1
+  
+  
+deploy:  
+  skip_cleanup: true
+  provider: script
+  #script: "mvn deploy:deploy-file -Dfile=cmd/crb-server/crb-server -Durl=https://api.bintray.com/maven/ocopea/pcf-fs-crb/ -DrepositoryId=bintray-ocopea-pcf-fs-crb --settings settings.xml"
+  script: "curl -T crb-server -u akarmia:f85c7ec8c15692e5f996b25f80244a962a5b91d5 https://api.bintray.com/content/ocopea/pcf-fs-crb/pcf-fs-crb/1.2/crb-server-1.2"
+  on:
+    all_branches: true
