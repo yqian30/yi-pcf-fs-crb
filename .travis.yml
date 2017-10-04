@@ -71,6 +71,7 @@ after_deploy:
   - cat manifest.yml
   - git checkout -B $TRAVIS_BRANCH
   - git add descriptor.json
+  - git add manifest.xml
   - git commit -m "[ci skip] Updated descriptor file with new version $NEW_VERSION."
   - git push origin $TRAVIS_BRANCH
   
