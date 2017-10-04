@@ -32,8 +32,8 @@
         "gpgSign": false
     },
 
-    "files": [{"includePattern":"cmd/crb-server/crb-server",
-              {"includePattern":"manifest.yml"}],
+    "files": [{"includePattern":"cmd/crb-server/(crb-server)", "uploadPattern": "$1"},
+              {"includePattern":"(manifest.yml)", "uploadPattern": "$1"}],
     "publish": true
 }
 
