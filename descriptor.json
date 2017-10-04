@@ -24,7 +24,7 @@
        In case the version already exists on Bintray, only the name fields is mandatory. */
 
     "version": {
-        "name":"3.0",
+        "name":"3.1",
         "desc": "Test travis pipeline",
         "released": "2017-09-27",
         "vcs_tag": "0.0",
