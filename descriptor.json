@@ -32,8 +32,8 @@
         "gpgSign": false
     },
 
-    "files": [{"includePattern":"cmd/crb-server/crb-server", "uploadPattern":"pcf-fs-crb"},
-              {"includePattern":"manifest.yml", "uploadPattern":"manifest.yml"}],
+    "files": [{"includePattern":"cmd/crb-server/crb-server",
+              {"includePattern":"manifest.yml"}],
     "publish": true
 }
 
