@@ -33,7 +33,7 @@
     },
 
     "files": [{"includePattern":"cmd/crb-server/(crb-server)", "uploadPattern": "$1", "matrixParams": {"override": true }}, 
-              {"includePattern":"(manifest.yml)", "uploadPattern": "$1", "matrixParams": {"override": true }}],
+              {"includePattern":"./(manifest.yml)", "uploadPattern": "$1", "matrixParams": {"override": true }}],
     "publish": true,
     "override": true
 }
