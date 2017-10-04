@@ -9,4 +9,4 @@ applications:
   services:
    - crb-mysql
   env:
-   CRB_VERSION: 0.38
+   CRB_VERSION: 2.7
