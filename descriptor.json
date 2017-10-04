@@ -32,7 +32,7 @@
         "gpgSign": false
     },
 
-    "files": [{"includePattern":"cmd/crb-server/(crb-server)", "uploadPattern": "$1.bin", "matrixParams": {"override": true }}, 
+    "files": [{"includePattern":"cmd/crb-server/(crb-server)", "uploadPattern": "pcf-fs-crb", "matrixParams": {"override": true }}, 
               {"includePattern":"./(manifest.yml)", "uploadPattern": "crb-$1", "matrixParams": {"override": true }}],
     "publish": true,
     "override": true
