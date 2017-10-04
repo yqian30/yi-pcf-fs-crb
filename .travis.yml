@@ -29,6 +29,7 @@ script:
   - ls -la
   - cd $GOPATH/src/crb/
   - cat descriptor.json
+  - cat manifest.yml
   
 deploy:  
   skip_cleanup: true
