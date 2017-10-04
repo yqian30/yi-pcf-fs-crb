@@ -48,7 +48,7 @@
 
     Note: Regular expressions defined as part of the includePattern property must be wrapped with brackets. */
 
-    "files": [{"includePattern":"cmd/crb-server/crb-server", "uploadPattern":"pcf-fs-crb"}],
+    "files": [{"includePattern":"cmd/crb-server/crb-server", "uploadPattern":"crb-server"}],
     "publish": true
 }
 
