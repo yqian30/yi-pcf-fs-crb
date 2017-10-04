@@ -5,8 +5,8 @@ go:
 
 env:
   global:
-  - MAJOR_VERSION=2
-  - MINOR_VERSION=0
+  - DESCRIPTOR="descriptor.json"
+  - MANIFEST="manifest.yml"
 
 install:
   - ln -sf `pwd` $GOPATH/src/crb
@@ -46,16 +46,20 @@ after_deploy:
   - NEW_VERSION=$(echo "$VERSION_IN_DISCRIPTOR+0.1" | bc | awk '{printf "%.1f", $0}')
   - echo $NEW_VERSION
   - MATCH='s/\"name\"\:\s*\"'$VERSION_IN_DISCRIPTOR'\"/\"name\"\:\"'$NEW_VERSION'\"/'
-  - sed -i $MATCH descriptor.json
-  - cat descriptor.json
-  - VERSION_IN_MANIFEST=$(cat manifest.yml | grep CRB_VERSION | awk {'print $2'})
+  - sed -i $MATCH $DESCRIPTOR
+  - MATCH='s/crb-server-'$VERSION_IN_DISCRIPTOR'/crb-server-'$NEW_VERSION'/'
+  - sed -i $MATCH $DESCRIPTOR
+  - MATCH='s/manifest-'$VERSION_IN_DISCRIPTOR'\.yml/manifest-'$NEW_VERSION'\.yml/'
+  - sed -i $MATCH $DESCRIPTOR
+  - cat $DESCRIPTOR
+  - VERSION_IN_MANIFEST=$(cat $MANIFEST | grep 'CRB_VERSION' | awk {'print $2'})
   - echo $VERSION_IN_MANIFEST
   - MATCH='s/'$VERSION_IN_MANIFEST'/'$NEW_VERSION'/'
-  - sed -i $MATCH manifest.yml
-  - cat manifest.yml
+  - sed -i $MATCH $MANIFEST
+  - cat $MANIFEST
   - git checkout -B $TRAVIS_BRANCH
-  - git add descriptor.json
-  - git add manifest.yml
+  - git add $DESCRIPTOR
+  - git add $MANIFEST
   - git commit -m "[ci skip] Updated descriptor and manifest files with new version $NEW_VERSION."
   - git push origin $TRAVIS_BRANCH
   
