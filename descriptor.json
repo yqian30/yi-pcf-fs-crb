@@ -24,7 +24,7 @@
        In case the version already exists on Bintray, only the name fields is mandatory. */
 
     "version": {
-        "name":"3.3",
+        "name":"3.4",
         "desc": "Test travis pipeline",
         "released": "2017-09-27",
         "vcs_tag": "0.0",
@@ -32,8 +32,8 @@
         "gpgSign": false
     },
 
-    "files": [{"includePattern":"cmd/crb-server/crb-server", "uploadPattern": "crb-server-3.3", "matrixParams": {"override": true }},
-              {"includePattern":"./manifest.yml", "uploadPattern": "manifest-3.3.yml", "matrixParams": {"override": true }}],
+    "files": [{"includePattern":"cmd/crb-server/crb-server", "uploadPattern": "crb-server-3.4", "matrixParams": {"override": true }},
+              {"includePattern":"./manifest.yml", "uploadPattern": "manifest-3.4.yml", "matrixParams": {"override": true }}],
     "publish": true,
     "override": true
 }
