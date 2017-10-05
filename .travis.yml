@@ -36,13 +36,13 @@ deploy:
      secure: $BINTRAY_API_KEY
   file: descriptor.json
   on:
-    all_branches: master
+    branches: master
 
 after_deploy:
   - VERSION_IN_DISCRIPTOR=$(grep -A2 '"name"' descriptor.json | grep -o "[0-9]*\.[0-9]*")
   - echo $VERSION_IN_DISCRIPTOR
   - NEW_VERSION=$(echo "$VERSION_IN_DISCRIPTOR+0.1" | bc | awk '{printf "%.1f", $0}')
-  - echo $NEW_VERSION
+  #- echo $NEW_VERSION
   - MATCH='s/\"name\"\:\s*\"'$VERSION_IN_DISCRIPTOR'\"/\"name\"\:\"'$NEW_VERSION'\"/'
   - sed -i $MATCH $DESCRIPTOR
   - MATCH='s/crb-server-'$VERSION_IN_DISCRIPTOR'/crb-server-'$NEW_VERSION'/'
