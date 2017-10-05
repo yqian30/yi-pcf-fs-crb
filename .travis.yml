@@ -36,7 +36,7 @@ deploy:
      secure: $BINTRAY_API_KEY
   file: descriptor.json
   on:
-    all_branches: true
+    all_branches: master
 
 after_deploy:
   - VERSION_IN_DISCRIPTOR=$(grep -A2 '"name"' descriptor.json | grep -o "[0-9]*\.[0-9]*")
